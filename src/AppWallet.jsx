@@ -71,6 +71,8 @@ export default class App extends React.Component {
             walletAPIVersion: undefined,
             wallets: [],
 
+            datos: [],
+
             networkId: undefined,
             Utxos: undefined,
             CollatUtxos: undefined,
@@ -641,6 +643,7 @@ buildSendADATransaction = async () => {
         const submittedTxHash = await this.API.submitTx(Buffer.from(signedTx.to_bytes(), "utf8").toString("hex"));
         console.log('HASH=' + submittedTxHash)
         this.setState({ submittedTxHash });    
+        //this.setState({ datos: { id: 1, hash: submittedTxHash} });
     
     //alert('Debo cerrar ventana - Transaccion creada: ' + submittedTxHash);
 
@@ -1183,13 +1186,7 @@ render(){
                         <div>                        
                         </div>
                     )}
-                </span>   
-
-                {/* <button style={{padding: "20px"}} onClick={this.refreshData}>Refrescar</button> */}
-                                
-                {/* <p><span style={{fontWeight: "bold"}}>Connected: </span>{`${this.state.walletIsEnabled}`}</p> */}
-                {/* <p><span style={{fontWeight: "bold"}}>Network Id (0 = testnet; 1 = mainnet): </span>{this.state.networkId}</p> */}                
-                {/* <p><span style={{fontWeight: "bold"}}>Change Address: </span>{this.state.changeAddress}</p>                 */}
+                </span>                  
                 
                 <hr style={{marginTop: "10px", marginBottom: "40px"}}/>
 
@@ -1198,18 +1195,6 @@ render(){
                     <Tab id="1" title="" panel={
                                                                     
                         <div style={{marginLeft: "20px"}}>                            
-                            {/* <FormGroup
-                                helperText="aaaaaaaaaaaaaaaaaaaa"
-                                label="Tienes {this.state.balance / 1000000} ADA disponibles. ¿Cuanto pagaras?"
-                            >
-                                <InputGroup
-                                    disabled={true}                                    
-                                    leftIcon=""
-                                    onChange={(event) => this.setState({addressBech32SendADA: event.target.value})}
-                                    value={this.state.addressBech32SendADA}
-
-                                />
-                            </FormGroup> */}
                              <span>
                                 {this.state.submittedTxHash==0 && this.state.wallets.length > 0 ? (
                                     <div>                                        
@@ -1217,7 +1202,7 @@ render(){
                                             {this.state.balance==null || this.state.balance==undefined  ? (
                                                 <div style={{textAlign: "right"}}>                                                    
                                                     <p><b>Recuperando Saldo</b></p>
-                                                    <p>Un momento ...</p>
+                                                    <p>Un momento ...</p>                                                    
                                                 </div>                                                
                                             ) : (
                                                 <div>
@@ -1267,43 +1252,12 @@ render(){
                     } />
                     <Tabs.Expander />
                 </Tabs>
-
-                {/* <hr style={{marginTop: "40px", marginBottom: "40px"}}/> */}
-
-                {/*<p>{`Unsigned txBodyCborHex: ${this.state.txBodyCborHex_unsigned}`}</p>*/}
-                {/*<p>{`Signed txBodyCborHex: ${this.state.txBodyCborHex_signed}`}</p>*/}
-                {/* <p>{`Submitted Tx Hash: ${this.state.submittedTxHash}`}</p> */}
-                {/* <p>{this.state.submittedTxHash ? 'check your wallet !' : ''}</p> */}
+               
             </div>
-
-            {/* <TodoList todos={todos} />
-            <input ref={todoTaskRef} type="text" placeholder="Nueva tarea" />
-            <button onClick={handleTodoAdd}>Connect Wallet</button>
-            <button>-</button>
-            <hr>
-            </hr> */}
+            
         </Fragment>
     );
 }
-
-
-    // const [todos, setTodos] = useState([
-    //     {id:1, task:'Tarea uno', completed: false}
-    // ])
-
-    // const todoTaskRef = useRef();
-
-    // const handleTodoAdd = () => {
-    //     const task = todoTaskRef.current.value;
-    //     if (task === '') return;
-
-    //     setTodos((prevTodos) => {
-    //         return [...prevTodos, { id:uuidv4(), task,completed:true }];
-    //     }); 
-    // }
-
-    
-    
 
 }
 

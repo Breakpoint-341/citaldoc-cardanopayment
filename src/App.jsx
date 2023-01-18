@@ -1,5 +1,4 @@
 import React, { Fragment, useState, useRef } from 'react'
-import { TodoList } from './components/TodoList'
 import { v4 as uuidv4 } from 'uuid'
 import AppWallet from "./AppWallet";
 import 'bootstrap/dist/css/bootstrap.css';

@@ -1,13 +1,13 @@
 import React, { useState , Fragment, useRef } from "react";
 import ReactDOM  from "react-dom";
-import { TodoList } from "./components/TodoList";
 import { v4 as uuidv4 } from "uuid";
 
 import { Tab, Tabs, RadioGroup, Radio, FormGroup, InputGroup, NumericInput } from "@blueprintjs/core";
 import "../node_modules/@blueprintjs/core/lib/css/blueprint.css";
 import "../node_modules/@blueprintjs/icons/lib/css/blueprint-icons.css";
 import "../node_modules/normalize.css/normalize.css";
-import {
+
+import {    
     Address,
     BaseAddress,
     MultiAsset,
@@ -49,8 +49,9 @@ import {
     hash_transaction,
     hash_script_data,
     hash_plutus_data,
-    ScriptDataHash, Ed25519KeyHash, NativeScript, StakeCredential
+    ScriptDataHash, Ed25519KeyHash, NativeScript, StakeCredential, GeneralTransactionMetadata
 } from "@emurgo/cardano-serialization-lib-asmjs";
+
 import {blake2b} from "blakejs";
 let Buffer = require('buffer/').Buffer
 let blake = require('blakejs')
@@ -71,8 +72,6 @@ export default class App extends React.Component {
             walletAPIVersion: undefined,
             wallets: [],
 
-            datos: [],
-
             networkId: undefined,
             Utxos: undefined,
             CollatUtxos: undefined,
@@ -87,7 +86,7 @@ export default class App extends React.Component {
             submittedTxHash: "",
             // Wallet Address CITALDOC PUBLIC TESTNET  WALLET
             addressBech32SendADA: "addr_test1qz0597pgc3wgvnyj7j8a5z9y3rae63dlrxp3kdhxujrp46a8njef8ctk320csr5jejuz2rc4nk6jqzz8p9kg209z392s3sghsc",
-            lovelaceToSend: 1.2,
+            lovelaceToSend: 2,
             assetNameHex: "4c494645",
             assetPolicyIdHex: "ae02017105527c6c0c9840397a39cc5ca39fabe5b9998ba70fda5f2f",
             assetAmountToSend: 5,
@@ -553,7 +552,7 @@ refreshData = async () => {
  */
 initTransactionBuilder = async () => {
 
-    const txBuilder = TransactionBuilder.new(
+    const txBuilder = TransactionBuilder.new( 
         TransactionBuilderConfigBuilder.new()
             .fee_algo(LinearFee.new(BigNum.from_str(this.protocolParams.linearFee.minFeeA), BigNum.from_str(this.protocolParams.linearFee.minFeeB)))
             .pool_deposit(BigNum.from_str(this.protocolParams.poolDeposit))
@@ -561,7 +560,7 @@ initTransactionBuilder = async () => {
             .coins_per_utxo_word(BigNum.from_str(this.protocolParams.coinsPerUtxoWord))
             .max_value_size(this.protocolParams.maxValSize)
             .max_tx_size(this.protocolParams.maxTxSize)
-            .prefer_pure_change(true)
+            .prefer_pure_change(true)                        
             .build()
     );
 
@@ -1157,7 +1156,7 @@ async componentDidMount() {
 
 render(){
     return (
-        <Fragment>
+        <Fragment>           
            
             <div style={{margin: "5px"}}>
             
